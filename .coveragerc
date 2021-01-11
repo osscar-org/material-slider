@@ -1,0 +1,2 @@
+[run]
+omit = material_slider/tests/*
