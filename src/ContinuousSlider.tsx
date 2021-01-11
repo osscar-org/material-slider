@@ -1,6 +1,11 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Slider from '@material-ui/core/Slider';
+
+interface ISliderPros {
+    value: number;
+    handleChange: (val: number) => void;
+};
 
 const useStyles = makeStyles({
     root: {
@@ -8,20 +13,22 @@ const useStyles = makeStyles({
     },
 });
 
-export default function ContinuousSlider() {
+export default function ContinuousSlider(Props: ISliderPros) {
     const classes = useStyles();
-    const [value, setValue] = React.useState<number>(30);
+    const [value, setValue] = React.useState<number>(Props.value);
 
-    const handleChange = (event: any, newValue: number | number[]) => {
+    const changeHandler = (event: any, newValue: number | number[]) => {
         setValue(newValue as number);
+        Props.handleChange(newValue as number);
     };
 
     return (
         <div className={classes.root}>
-            <Slider value={value}
-                onChange={handleChange}
+            <Slider id="dou"
+                value={value}
+                onChange={changeHandler}
                 aria-labelledby="continuous-slider"
-                valueLabelDisplay="auto"
+                valueLabelDisplay="on"
             />
         </div>
     );

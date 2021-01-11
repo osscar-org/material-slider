@@ -26,7 +26,7 @@ export class MaterialSliderModel extends DOMWidgetModel {
       _view_name: MaterialSliderModel.view_name,
       _view_module: MaterialSliderModel.view_module,
       _view_module_version: MaterialSliderModel.view_module_version,
-      value: 'Hello World',
+      value: 0.0,
     };
   }
 
@@ -44,18 +44,48 @@ export class MaterialSliderModel extends DOMWidgetModel {
 }
 
 export class MaterialSliderView extends DOMWidgetView {
+  initialize(){
+    this.handleChange = this.handleChange.bind(this);
+  }
+
   render() {
     this.el.classList.add('custom-widget');
 
-    this.value_changed();
     this.model.on('change:value', this.value_changed, this);
+    this._value = this.model.get('value');
 
-    ReactDOM.render(<ContinuousSlider />, this.el);
+    ReactDOM.render(<ContinuousSlider
+      value={this._value}
+      handleChange={this.handleChange}
+    />, this.el);
+  }
+
+  events(): { [e: string]: string } {
+    return { "reset .MuiSlider-thumb": "set_value" };
+  }
+
+  set_value(event: any) {
+    console.log("The value has been changed ######" + this._value);
+    this.model.set('value', this._value);
+    this.touch();
+  }
+
+  handleChange(val: number) {
+    console.log("The value is:" + val);
+    this.model.set('value', val);
+    this.touch();
   }
 
   value_changed() {
     // this.el.textContent = this.model.get('value');
-    console.log("The value has been changed");
+    this._value = this.model.get('value');
+    console.log("The value has been changed" + this._value);
+    ReactDOM.render(<ContinuousSlider
+      value={this._value}
+      handleChange={this.handleChange}
+    />, this.el);
   }
+
+  private _value: number;
 }
 
