@@ -1,35 +1,38 @@
-import React, { Component } from 'react';
-import { makeStyles } from '@material-ui/core/styles';
+import React from 'react';
 import Slider from '@material-ui/core/Slider';
 
-interface ISliderPros {
+type MyProps = {
     value: number;
     handleChange: (val: number) => void;
 };
 
-const useStyles = makeStyles({
-    root: {
-        width: 200,
-    },
-});
+type MyState = {
+    value: number; 
+}
 
-export default function ContinuousSlider(Props: ISliderPros) {
-    const classes = useStyles();
-    const [value, setValue] = React.useState<number>(Props.value);
+export default class ContinuousSlider extends React.Component<MyProps, MyState> {
 
-    const changeHandler = (event: any, newValue: number | number[]) => {
-        setValue(newValue as number);
-        Props.handleChange(newValue as number);
+    constructor(props: MyProps){
+        super(props);
+        this.state = {value: props.value};
+
+        this.changeHandler = this.changeHandler.bind(this);
     };
 
-    return (
-        <div className={classes.root}>
+    changeHandler(event: any, newValue: number | number[]) {
+        this.setState({value: newValue as number});
+        this.props.handleChange(newValue as number);
+    };
+
+    render() {
+        return(
+        <div className="dou-slider">
             <Slider id="dou"
-                value={value}
-                onChange={changeHandler}
+                value={this.state.value}
+                onChange={this.changeHandler}
                 aria-labelledby="continuous-slider"
                 valueLabelDisplay="on"
             />
-        </div>
-    );
+        </div>);
+    };
 }
