@@ -24,6 +24,12 @@ export default class ContinuousSlider extends React.Component<MyProps, MyState> 
         this.props.handleChange(newValue as number);
     };
 
+    componentDidUpdate(props: MyProps, states: MyState){
+        if (props.value !== this.props.value) {
+            this.setState({value: this.props.value});
+        };
+    };
+
     render() {
         return(
         <div className="dou-slider">
