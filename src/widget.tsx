@@ -27,6 +27,13 @@ export class MaterialSliderModel extends DOMWidgetModel {
       _view_module: MaterialSliderModel.view_module,
       _view_module_version: MaterialSliderModel.view_module_version,
       value: 0.0,
+      width: "400px",
+      marks: [],
+      labels: [],
+      title: "title",
+      min: 0.0,
+      max: 100.0,
+      step: 1.0,
     };
   }
 
@@ -44,8 +51,9 @@ export class MaterialSliderModel extends DOMWidgetModel {
 }
 
 export class MaterialSliderView extends DOMWidgetView {
-  initialize(){
+  initialize() {
     this.handleChange = this.handleChange.bind(this);
+    this._marks = [];
   }
 
   render() {
@@ -53,9 +61,26 @@ export class MaterialSliderView extends DOMWidgetView {
 
     this.model.on('change:value', this.value_changed, this);
     this._value = this.model.get('value');
+    this._width = this.model.get('width');
+    this._title = this.model.get('title');
+    this._min = this.model.get('min');
+    this._max = this.model.get('max');
+    this._step = this.model.get('step');
+    let marks = this.model.get('marks');
+    let labels = this.model.get('labels');
+
+    for (var i=0; i < marks.length; i++){
+      this._marks.push({value: marks[i], label: labels[i]});
+    };
 
     ReactDOM.render(<ContinuousSlider
+      title={this._title}
+      width={this._width}
       value={this._value}
+      marks={this._marks}
+      min={this._min}
+      max={this._max}
+      step={this._step}
       handleChange={this.handleChange}
     />, this.el);
   }
@@ -65,13 +90,11 @@ export class MaterialSliderView extends DOMWidgetView {
   }
 
   set_value(event: any) {
-    console.log("The value has been changed ######" + this._value);
     this.model.set('value', this._value);
     this.touch();
   }
 
   handleChange(val: number) {
-    console.log("The value is:" + val);
     this.model.set('value', val);
     this.touch();
   }
@@ -81,11 +104,23 @@ export class MaterialSliderView extends DOMWidgetView {
     this._value = this.model.get('value');
     console.log("The value has been changed" + this._value);
     ReactDOM.render(<ContinuousSlider
+      title={this._title}
+      width={this._width}
       value={this._value}
+      marks={this._marks}
+      min={this._min}
+      max={this._max}
+      step={this._step}
       handleChange={this.handleChange}
     />, this.el);
   }
 
   private _value: number;
+  private _width: string;
+  private _marks: {value: number, label: string}[];
+  private _title: string;
+  private _min: number;
+  private _max: number;
+  private _step: number;
 }
 
