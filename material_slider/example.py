@@ -32,5 +32,6 @@ class MaterialSlider(DOMWidget):
     min = Float(0.0).tag(sync=True)
     max = Float(100.0).tag(sync=True)
     step = Float(1.0).tag(sync=True)
+    valueLabelDisplay = Unicode('on').tag(sync=True)
     
 

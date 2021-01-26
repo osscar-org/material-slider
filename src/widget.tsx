@@ -34,6 +34,7 @@ export class MaterialSliderModel extends DOMWidgetModel {
       min: 0.0,
       max: 100.0,
       step: 1.0,
+      valueLabelDisplay: "on",
     };
   }
 
@@ -64,6 +65,7 @@ export class MaterialSliderView extends DOMWidgetView {
     this.model.on('change:min', this.value_changed, this);
     this.model.on('change:max', this.value_changed, this);
     this.model.on('change:step', this.value_changed, this);
+    this.model.on('change:valueLabelDisplay', this.value_changed, this);
 
     this._value = this.model.get('value');
     this._width = this.model.get('width');
@@ -71,6 +73,8 @@ export class MaterialSliderView extends DOMWidgetView {
     this._min = this.model.get('min');
     this._max = this.model.get('max');
     this._step = this.model.get('step');
+    this._valueLabelDisplay = this.model.get('valueLabelDisplay');
+
     let marks = this.model.get('marks');
     let labels = this.model.get('labels');
 
@@ -87,6 +91,7 @@ export class MaterialSliderView extends DOMWidgetView {
       max={this._max}
       step={this._step}
       handleChange={this.handleChange}
+      valueLabelDisplay={this._valueLabelDisplay}
     />, this.el);
   }
 
@@ -111,6 +116,7 @@ export class MaterialSliderView extends DOMWidgetView {
     this._min = this.model.get('min');
     this._max = this.model.get('max');
     this._step = this.model.get('step');
+    this._valueLabelDisplay = this.model.get('valueLabelDisplay');
     
     ReactDOM.render(<ContinuousSlider
       title={this._title}
@@ -121,6 +127,7 @@ export class MaterialSliderView extends DOMWidgetView {
       max={this._max}
       step={this._step}
       handleChange={this.handleChange}
+      valueLabelDisplay={this._valueLabelDisplay}
     />, this.el);
   }
 
@@ -131,5 +138,6 @@ export class MaterialSliderView extends DOMWidgetView {
   private _min: number;
   private _max: number;
   private _step: number;
+  private _valueLabelDisplay: "on" | "off" | "auto" | undefined;
 }
 

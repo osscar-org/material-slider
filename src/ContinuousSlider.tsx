@@ -11,6 +11,7 @@ type MyProps = {
     min: number;
     max: number;
     step: number;
+    valueLabelDisplay: "on" | "off" | "auto" | undefined;
     handleChange: (val: number) => void;
 };
 
@@ -48,7 +49,7 @@ export default class ContinuousSlider extends React.Component<MyProps, MyState> 
                             value={this.state.value}
                             onChange={this.changeHandler}
                             aria-labelledby="continous-slider"
-                            valueLabelDisplay="on"
+                            valueLabelDisplay={this.props.valueLabelDisplay}
                             orientation="horizontal"
                             marks={this.props.marks}
                             min={this.props.min}
