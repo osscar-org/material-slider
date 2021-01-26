@@ -6,7 +6,7 @@ import Typography from '@material-ui/core/Typography';
 type MyProps = {
     value: number;
     width: string;
-    marks: {value: number, label: string}[];
+    marks: { value: number, label: string }[];
     title: string;
     min: number;
     max: number;
@@ -40,25 +40,26 @@ export default class ContinuousSlider extends React.Component<MyProps, MyState> 
 
     render() {
         return (
-            <div className="dou-slider">
+            <div className="matui-div">
                 <Grid container spacing={2} alignItems="center">
                     <Grid item>
-                        <Typography gutterBottom>
-                            { this.props.title }
-                </Typography>
-                    </Grid>
-                    <Grid item>
-                        <Slider id="dou"
+                        <Slider id="matui-slider"
                             style={{ width: this.props.width }}
                             value={this.state.value}
                             onChange={this.changeHandler}
-                            aria-labelledby="continuous-slider"
+                            aria-labelledby="continous-slider"
                             valueLabelDisplay="on"
+                            orientation="horizontal"
                             marks={this.props.marks}
                             min={this.props.min}
                             max={this.props.max}
                             step={this.props.step}
                         />
+                    </Grid>
+                    <Grid item>
+                        <Typography gutterBottom>
+                            {this.props.title}
+                        </Typography>
                     </Grid>
                 </Grid>
             </div>);

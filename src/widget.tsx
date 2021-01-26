@@ -60,6 +60,11 @@ export class MaterialSliderView extends DOMWidgetView {
     this.el.classList.add('custom-widget');
 
     this.model.on('change:value', this.value_changed, this);
+    this.model.on('change:width', this.value_changed, this);
+    this.model.on('change:min', this.value_changed, this);
+    this.model.on('change:max', this.value_changed, this);
+    this.model.on('change:step', this.value_changed, this);
+
     this._value = this.model.get('value');
     this._width = this.model.get('width');
     this._title = this.model.get('title');
@@ -102,7 +107,11 @@ export class MaterialSliderView extends DOMWidgetView {
   value_changed() {
     // this.el.textContent = this.model.get('value');
     this._value = this.model.get('value');
-    console.log("The value has been changed" + this._value);
+    this._width = this.model.get('width');
+    this._min = this.model.get('min');
+    this._max = this.model.get('max');
+    this._step = this.model.get('step');
+    
     ReactDOM.render(<ContinuousSlider
       title={this._title}
       width={this._width}
