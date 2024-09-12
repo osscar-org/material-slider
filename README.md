@@ -1,3 +1,4 @@
+# **This repository is archived since it is not maintained anymore**
 
 # material-slider
 
